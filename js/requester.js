@@ -36,24 +36,39 @@ var MainCtrl = function($scope, $routeParams, HisStorage) {
   };
 };
 
-var RequestCtrl = function($scope, $routeParams, HisStorage) {
+var RequestCtrl = function($scope, $http, $routeParams, HisStorage) {
   HisStorage.get($routeParams.requestId, function(current_request) {
     if (current_request) {
       $scope.headers = current_request.headers;
       $scope.url = current_request.url;
       $scope.method = current_request.method;
       $scope.requestbody = current_request.body;
+      $scope.responsebody = current_request.responsebody;
+      $scope.responseheaders = current_request.responseheaders;
     }
   });
 
-  $scope.sendRequest = function() {
-    HisStorage.save({
-      url: $scope.url,
-      method: $scope.method,
-      headers: $scope.headers,
-      body: $scope.requestbody
-    });
-  $scope.history = HisStorage.items;
+  $scope.sendRequest = function() {   
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+	if (xhr.readyState == 4) {
+          $scope.responsebody = xhr.responseText;
+          $scope.responseheaders = xhr.getAllResponseHeaders().split("\n");
+
+          HisStorage.save({
+            url: $scope.url,
+            method: $scope.method,
+            headers: $scope.headers,
+            body: $scope.requestbody,
+            responseheaders: $scope.responseheaders,
+            responsebody: $scope.responsebody
+          });
+
+          $scope.history = HisStorage.items;
+        }
+    };
+    xhr.open($scope.method, $scope.url);
+    xhr.send();      
   };
 
 };

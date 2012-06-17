@@ -2,7 +2,7 @@
   "name" : "requester",
   "version" : "0.8.0",
   "description" : "HTTP request response tool.",
-  "permissions" : ["http://*", "https://*"],
+  "permissions" : ["http://*/", "https://*/"],
   "app" : {
     "launch" : {
       "local_path" : "index.html"
