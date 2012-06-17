@@ -6,17 +6,19 @@
     <script type="text/javascript" src="js/boot/angular-1.0.0.min.js"></script>
     <script type="text/javascript" src="js/requester.js"></script>
     <script type="text/javascript" src="js/history.service.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
   </head>
   <body ng-controller="MainCtrl">
+    <div class="container-fluid">
     <div id="history">
       <h2>History</h2>
-      <button ng-click="clearHistory()">Clear History</button>
+      <button class="btn btn-mini btn-danger" ng-click="clearHistory()">Clear History</button>
       <ul>
         <li ng-repeat="h in history"><a href="#/request/{{h.id}}">{{h.url}} - {{h.time}}</a></li>
       </ul>
     </div>
     <div ng-view></div>
+    </div>
    </body>
 </html>
 

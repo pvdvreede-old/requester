@@ -59,7 +59,7 @@ var RequestCtrl = function($scope, $location, $routeParams, HisStorage) {
     xhr.onreadystatechange = function() {
 	if (xhr.readyState == 4) {
           var responsebody = xhr.responseText;
-          var responseheaders = xhr.getAllResponseHeaders().split("\n");
+          var responseheaders = xhr.getAllResponseHeaders().split("\r\n");
 
           HisStorage.save({
             time: new Date().toString(),
