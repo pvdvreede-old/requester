@@ -15,7 +15,7 @@ var MainCtrl = function($scope, $routeParams, HisStorage) {
   };
 };
 
-var RequestCtrl = function($scope, $http, $routeParams, HisStorage) {
+var RequestCtrl = function($scope, $location, $routeParams, HisStorage) {
   // set defaults
   $scope.method = 'GET';
   $scope.headers = [
@@ -58,8 +58,8 @@ var RequestCtrl = function($scope, $http, $routeParams, HisStorage) {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
 	if (xhr.readyState == 4) {
-          $scope.responsebody = xhr.responseText;
-          $scope.responseheaders = xhr.getAllResponseHeaders().split("\n");
+          var responsebody = xhr.responseText;
+          var responseheaders = xhr.getAllResponseHeaders().split("\n");
 
           HisStorage.save({
             time: new Date().toString(),
@@ -67,11 +67,15 @@ var RequestCtrl = function($scope, $http, $routeParams, HisStorage) {
             method: $scope.method,
             headers: $scope.headers,
             body: $scope.requestbody,
-            responseheaders: $scope.responseheaders,
-            responsebody: $scope.responsebody
+            responseheaders: responseheaders,
+            responsebody: responsebody
+          }, function(request) {
+            $scope.$apply(function() {
+              $scope.history = HisStorage.items;
+	      $scope.responseheaders = responseheaders;
+              $scope.responsebody = responsebody;
+            });
           });
-
-          $scope.history = HisStorage.items;
         }
     };
     xhr.open($scope.method, $scope.url);
