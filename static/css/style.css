@@ -1,6 +1,11 @@
 #request {
   width: 49%;
+  float: left;
+}
 
+#response {
+  width: 49%;
+  float: right;
 }
 
 input[type="text"].url {

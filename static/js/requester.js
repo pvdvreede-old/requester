@@ -53,7 +53,7 @@ var RequestCtrl = function($scope, $routeParams, HisStorage) {
       method: $scope.method,
       headers: $scope.headers,
       body: $scope.requestbody
-    }, function);
+    });
   };
 
 };

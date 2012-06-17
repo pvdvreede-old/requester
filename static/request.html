@@ -33,3 +33,21 @@
         </fieldset>
       </form>
     </div>
+    <div id="response">
+      <form>
+        <fieldset>
+          <legend>Response</legend>
+          <h3>Headers</h3>
+          <ul>
+            <li ng-repeat="rh in responseheaders">
+              {{rh.key}} : {{rh.value}}
+            </li>
+          </ul>
+          <div id="response-body">
+            <h3>Body</h3>
+            <textarea rows="30" cols="70" ng-model="responsebody"></textarea>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+          
