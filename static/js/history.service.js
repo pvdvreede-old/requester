@@ -15,5 +15,20 @@ historymod.factory('HisStorage', function() {
     return HisStorage.items;
   };
 
+  HisStorage.get = function(id, cb) {
+    for (var i in HisStorage.items) {
+      if (HisStorage.items[i].id == id) {
+        cb(HisStorage.items[i]);
+        return;
+      }
+    }
+    cb(null);
+  };
+
+  HisStorage.clear = function() {
+    HisStorage.items = [];
+    localStorage.setItem('req-history', JSON.stringify(HisStorage.items));
+  };
+
   return HisStorage;
 });
