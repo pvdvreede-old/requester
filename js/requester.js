@@ -6,26 +6,6 @@ reqmod.config(function($routeProvider) {
 });
 
 var MainCtrl = function($scope, $routeParams, HisStorage) {
-  $scope.headers = [{ key: 'test', value: ''}];
-  $scope.addHeader = function() {
-    $scope.headers.push({ key: 't', value: '' });
-  };
-  $scope.removeHeader = function(header) {
-    for(i in $scope.headers) {
-      if ($scope.headers[i].key == header.key) {
-        $scope.headers.splice(i, 1)
-        break;
-      }
-    }
-  };
-  $scope.showBody = function() {
-    $('#request-body').show();
-  };
-
-  $scope.hideBody = function() {
-    $('#request-body').hide();
-  };
-
   HisStorage.load();
   $scope.history = HisStorage.items;
 
@@ -36,6 +16,33 @@ var MainCtrl = function($scope, $routeParams, HisStorage) {
 };
 
 var RequestCtrl = function($scope, $http, $routeParams, HisStorage) {
+  // set defaults
+  $scope.method = 'GET';
+  $scope.headers = [
+    { key: 'Accept', value: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' },
+  ];
+
+  $scope.addHeader = function() {
+    $scope.headers.push({ key: 't', value: '' });
+  };
+
+  $scope.removeHeader = function(header) {
+    for(i in $scope.headers) {
+      if ($scope.headers[i].key == header.key) {
+        $scope.headers.splice(i, 1)
+        break;
+      }
+    }
+  };
+
+  $scope.showBody = function() {
+    $('#request-body').show();
+  };
+
+  $scope.hideBody = function() {
+    $('#request-body').hide();
+  };
+
   HisStorage.get($routeParams.requestId, function(current_request) {
     if (current_request) {
       $scope.headers = current_request.headers;

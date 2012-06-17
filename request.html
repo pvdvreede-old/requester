@@ -9,10 +9,10 @@
           </ul>
           <h3>Method</h3>
           <ul>
-            <li><input ng-model="method" ng-click="hideBody()" type="radio" name="method" value="GET" />GET</li>
-            <li><input ng-model="method" ng-click="showBody()" type="radio" name="method" value="POST" />POST</li>
-            <li><input ng-model="method" ng-click="showBody()" type="radio" name="method" value="PUT" />PUT</li>
-            <li><input ng-model="method" ng-click="showBody()" type="radio" name="method" value="DELETE" />DELETE</li>
+            <li><input ng-model="method" ng-change="hideBody()" type="radio" name="method" value="GET" />GET</li>
+            <li><input ng-model="method" ng-change="showBody()" type="radio" name="method" value="POST" />POST</li>
+            <li><input ng-model="method" ng-change="showBody()" type="radio" name="method" value="PUT" />PUT</li>
+            <li><input ng-model="method" ng-change="showBody()" type="radio" name="method" value="DELETE" />DELETE</li>
           </ul>
           <h3>Headers</h3>
           <ul>
