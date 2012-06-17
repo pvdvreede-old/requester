@@ -9,14 +9,11 @@
     <link rel="stylesheet" type="text/css" href="css/style.css" />
   </head>
   <body ng-controller="MainCtrl">
-    <div id="status">
-      <p>{{status}}</p>
-    </div>
     <div id="history">
       <h2>History</h2>
       <button ng-click="clearHistory()">Clear History</button>
       <ul>
-        <li ng-repeat="h in history"><a href="#/request/{{h.id}}">{{h.url}}</a></li>
+        <li ng-repeat="h in history"><a href="#/request/{{h.id}}">{{h.url}} - {{h.time}}</a></li>
       </ul>
     </div>
     <div ng-view></div>

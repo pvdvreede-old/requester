@@ -6,7 +6,6 @@ reqmod.config(function($routeProvider) {
 });
 
 var MainCtrl = function($scope, $routeParams, HisStorage) {
-  $scope.status = $routeParams.requestId;
   $scope.headers = [{ key: 'test', value: ''}];
   $scope.addHeader = function() {
     $scope.headers.push({ key: 't', value: '' });
@@ -56,6 +55,7 @@ var RequestCtrl = function($scope, $http, $routeParams, HisStorage) {
           $scope.responseheaders = xhr.getAllResponseHeaders().split("\n");
 
           HisStorage.save({
+            time: new Date().toString(),
             url: $scope.url,
             method: $scope.method,
             headers: $scope.headers,
