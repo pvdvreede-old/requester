@@ -1,9 +1,8 @@
 var reqmod = angular.module('requester', ['history.service']);
 reqmod.config(function($routeProvider) {
   $routeProvider.
-    when('/', {controller: MainCtrl}).
     when('/request/:requestId', { controller: RequestCtrl, templateUrl: 'request.html' }).
-    otherwise({redirectTo: '/'});
+    otherwise({redirectTo: '/request/new'});
 });
 
 var MainCtrl = function($scope, $routeParams, HisStorage) {
@@ -54,6 +53,7 @@ var RequestCtrl = function($scope, $routeParams, HisStorage) {
       headers: $scope.headers,
       body: $scope.requestbody
     });
+  $scope.history = HisStorage.items;
   };
 
 };
