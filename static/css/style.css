@@ -1,0 +1,12 @@
+#request {
+  width: 49%;
+
+}
+
+input[type="text"].url {
+  width: 40em;
+}
+
+input[type="text"] {
+  width: 20em;
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="requester">
+  <head>
+    <title>Requester</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="http://code.angularjs.org/angular-1.0.0.min.js"></script>
+    <script type="text/javascript" src="js/requester.js"></script>
+    <script type="text/javascript" src="js/history.service.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+  </head>
+  <body ng-controller="MainCtrl">
+    <div id="history">
+      <h2>History</h2>
+      <ul>
+        <li ng-repeat="h in history"><a href="#/request/{{h.id}}">{{h.url}}</a></li>
+      </ul>
+    </div>
+    <div id="request">
+      <form>
+        <fieldset>
+          <legend>Request</legend>
+          <h3>URL</h3>
+          <ul>
+            <li><input class="url" type="text" name="url" ng-model="url" /></li>
+          </ul>
+          <h3>Method</h3>
+          <ul>
+            <li><input ng-click="hideBody()" type="radio" name="method" value="GET" />GET</li>
+            <li><input ng-click="showBody()" type="radio" name="method" value="POST" />POST</li>
+            <li><input ng-click="showBody()" type="radio" name="method" value="PUT" />PUT</li>
+            <li><input ng-click="showBody()" type="radio" name="method" value="DELETE" />DELETE</li>
+          </ul>
+          <h3>Headers</h3>
+          <ul>
+            <li ng-repeat="header in headers">
+              <input type="text" ng-model="header.key" />
+              :
+              <input type="text" ng-model="header.value" />
+              <button ng-click="removeHeader(header)">Remove</button>
+            </li>
+          </ul>
+          <button ng-click="addHeader()">Add header</button>
+          <div id="request-body">
+            <h3>Body</h3>
+            <textarea rows="30" cols="70" ng-model="requestbody"></textarea>
+          </div>
+          <br />
+          <button ng-click="sendRequest()">Send Request</button>
+        </fieldset>
+      </form>
+    </div>
+  </body>
+</html>
+
