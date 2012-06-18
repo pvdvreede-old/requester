@@ -36,13 +36,13 @@ var RequestCtrl = function($scope, $location, $routeParams, HisStorage) {
 
   $scope.addHeader = function() {
     $scope.headers.push({
-      key: 't',
+      key: '',
       value: ''
     });
   };
 
   $scope.removeHeader = function(header) {
-    for (i in $scope.headers) {
+    for (var i in $scope.headers) {
       if ($scope.headers[i].key == header.key) {
         $scope.headers.splice(i, 1)
         break;
@@ -72,12 +72,14 @@ var RequestCtrl = function($scope, $location, $routeParams, HisStorage) {
 
   $scope.sendRequest = function() {
     var xhr = new XMLHttpRequest();
+
     xhr.onerror = function(e) {
       $scope.$apply(function() {
         $scope.responsestatus = "An error has occured.";
       });
     };
-    xhr.onreadystatechange = function() {
+
+    xhr.onload = function() {
       if (xhr.readyState == 4) {
         var responsebody = xhr.responseText;
         var responseheaders = xhr.getAllResponseHeaders().split("\r\n");
@@ -107,8 +109,19 @@ var RequestCtrl = function($scope, $location, $routeParams, HisStorage) {
         });
       }
     };
+
     xhr.open($scope.method, $scope.url);
-    xhr.send();
+
+    // set the headers
+    $scope.headers.forEach(function(h, i) {
+      xhr.setRequestHeader(h.key, h.value);
+    });
+
+    if ($scope.method == 'GET') {
+      xhr.send();
+    } else {
+      xhr.send($scope.requestbody);
+    }
     $('#loading').show();
   };
 
