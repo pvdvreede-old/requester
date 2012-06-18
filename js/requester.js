@@ -81,6 +81,7 @@ var RequestCtrl = function($scope, $location, $routeParams, HisStorage) {
     xhr.onerror = function(e) {
       $scope.$apply(function() {
         $scope.responsestatus = "An error has occured.";
+        $('#loading').hide();
       });
     };
 
