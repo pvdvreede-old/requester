@@ -73,6 +73,11 @@ var RequestCtrl = function($scope, $location, $routeParams, HisStorage) {
   $scope.sendRequest = function() {
     var xhr = new XMLHttpRequest();
 
+    // remove old response if there was one
+    $scope.responsestatus = '';
+    $scope.responseheaders = [];
+    $scope.responsebody = '';
+
     xhr.onerror = function(e) {
       $scope.$apply(function() {
         $scope.responsestatus = "An error has occured.";
