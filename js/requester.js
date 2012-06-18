@@ -1,8 +1,13 @@
 var reqmod = angular.module('requester', ['history.service']);
 reqmod.config(function($routeProvider) {
   $routeProvider.
-    when('/request/:requestId', { controller: RequestCtrl, templateUrl: 'request.html' }).
-    otherwise({redirectTo: '/request/new'});
+  when('/request/:requestId', {
+    controller: RequestCtrl,
+    templateUrl: 'request.html'
+  }).
+  otherwise({
+    redirectTo: '/request/new'
+  });
 });
 
 var MainCtrl = function($scope, $routeParams, HisStorage) {
@@ -15,24 +20,29 @@ var MainCtrl = function($scope, $routeParams, HisStorage) {
   };
 
   $('#historytab a').click(function(e) {
-      e.preventDefault();
-      $(this).tab('show');
+    e.preventDefault();
+    $(this).tab('show');
   });
 };
 
 var RequestCtrl = function($scope, $location, $routeParams, HisStorage) {
   // set defaults
   $scope.method = 'GET';
-  $scope.headers = [
-    { key: 'Accept', value: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' },
+  $scope.headers = [{
+    key: 'Accept',
+    value: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+  },
   ];
 
   $scope.addHeader = function() {
-    $scope.headers.push({ key: 't', value: '' });
+    $scope.headers.push({
+      key: 't',
+      value: ''
+    });
   };
 
   $scope.removeHeader = function(header) {
-    for(i in $scope.headers) {
+    for (i in $scope.headers) {
       if ($scope.headers[i].key == header.key) {
         $scope.headers.splice(i, 1)
         break;
@@ -60,47 +70,49 @@ var RequestCtrl = function($scope, $location, $routeParams, HisStorage) {
     }
   });
 
-  $scope.sendRequest = function() {   
+  $scope.sendRequest = function() {
     var xhr = new XMLHttpRequest();
     xhr.onerror = function(e) {
       $scope.$apply(function() {
-        $scope.responsestatus = "An error has occured."; 
+        $scope.responsestatus = "An error has occured.";
       });
     };
     xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4) {
-              var responsebody = xhr.responseText;
-              var responseheaders = xhr.getAllResponseHeaders().split("\r\n");
-              // remove last header string in array as it is blank
-              responseheaders.pop();
-              var responsestatus = xhr.status + " - " + xhr.statusText;
+      if (xhr.readyState == 4) {
+        var responsebody = xhr.responseText;
+        var responseheaders = xhr.getAllResponseHeaders().split("\r\n");
+        // remove last header string in array as it is blank
+        responseheaders.pop();
+        var responsestatus = xhr.status + " - " + xhr.statusText;
 
-              HisStorage.save({
-                time: new Date().toString(),
-                url: $scope.url,
-                method: $scope.method,
-                headers: $scope.headers,
-                body: $scope.requestbody,
-                responseheaders: responseheaders,
-                responsebody: responsebody,
-                responsestatus: responsestatus
-              }, function(request) {
-                // Kick angular to update the screen after the request has come back
-                $scope.$apply(function() {
-                  $scope.history = HisStorage.items;
-                  $scope.responseheaders = responseheaders;
-                  $scope.responsebody = responsebody;
-                  $scope.responsestatus = responsestatus;
-                  $('#loading').hide();   
-                });
-              });
-            }
+        HisStorage.save({
+          time: new Date().toString(),
+          url: $scope.url,
+          method: $scope.method,
+          headers: $scope.headers,
+          body: $scope.requestbody,
+          responseheaders: responseheaders,
+          responsebody: responsebody,
+          responsestatus: responsestatus
+        },
+        function(request) {
+          // Kick angular to update the screen after the request has come back
+          $scope.$apply(function() {
+            $scope.history = HisStorage.items;
+            $scope.responseheaders = responseheaders;
+            $scope.responsebody = responsebody;
+            $scope.responsestatus = responsestatus;
+            $('#loading').hide();
+          });
+        });
+      }
     };
     xhr.open($scope.method, $scope.url);
-    xhr.send();      
+    xhr.send();
     $('#loading').show();
   };
 
   // hide loading icon until its needed
   $('#loading').hide();
 };
+

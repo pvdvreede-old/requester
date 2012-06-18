@@ -4,8 +4,7 @@ historymod.factory('HisStorage', function() {
   HisStorage.items = [];
   HisStorage.save = function(request, cb) {
     request.id = Math.random().toString();
-    if (!HisStorage.items)
-      HisStorage.items = [];
+    if (!HisStorage.items) HisStorage.items = [];
     HisStorage.items.unshift(request);
     localStorage.setItem('req-history', JSON.stringify(HisStorage.items));
     cb(request);
@@ -33,3 +32,4 @@ historymod.factory('HisStorage', function() {
 
   return HisStorage;
 });
+
