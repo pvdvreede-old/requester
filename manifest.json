@@ -3,6 +3,10 @@
   "version" : "0.8.0",
   "description" : "HTTP request response tool.",
   "permissions" : ["http://*/", "https://*/"],
+  "icons" : {
+    "16" : "img/requester-16x16.png",
+    "128" : "img/requester-128x128.png"
+  },
   "app" : {
     "launch" : {
       "local_path" : "index.html"
