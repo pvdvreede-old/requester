@@ -62,29 +62,33 @@ var RequestCtrl = function($scope, $location, $routeParams, HisStorage) {
   $scope.sendRequest = function() {   
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
-	if (xhr.readyState == 4) {
-          var responsebody = xhr.responseText;
-          var responseheaders = xhr.getAllResponseHeaders().split("\r\n");
+        if (xhr.readyState == 4) {
+              var responsebody = xhr.responseText;
+              var responseheaders = xhr.getAllResponseHeaders().split("\r\n");
 
-          HisStorage.save({
-            time: new Date().toString(),
-            url: $scope.url,
-            method: $scope.method,
-            headers: $scope.headers,
-            body: $scope.requestbody,
-            responseheaders: responseheaders,
-            responsebody: responsebody
-          }, function(request) {
-            $scope.$apply(function() {
-              $scope.history = HisStorage.items;
-	      $scope.responseheaders = responseheaders;
-              $scope.responsebody = responsebody;
-            });
-          });
-        }
+              HisStorage.save({
+                time: new Date().toString(),
+                url: $scope.url,
+                method: $scope.method,
+                headers: $scope.headers,
+                body: $scope.requestbody,
+                responseheaders: responseheaders,
+                responsebody: responsebody
+              }, function(request) {
+                $scope.$apply(function() {
+                  $scope.history = HisStorage.items;
+                  $scope.responseheaders = responseheaders;
+                  $scope.responsebody = responsebody;
+                  $('#loading').hide();   
+                });
+              });
+            }
     };
     xhr.open($scope.method, $scope.url);
     xhr.send();      
+    $('#loading').show();
   };
 
+  // hide loading icon until its needed
+  $('#loading').hide();
 };
