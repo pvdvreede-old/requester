@@ -58,6 +58,14 @@ var RequestCtrl = function($scope, $location, $routeParams, HisStorage) {
     $('#request-body').hide();
   };
 
+  $scope.checkBody = function() {
+    if ($scope.method == 'GET') {
+      $scope.hideBody();
+    } else {
+      $scope.showBody();
+    }
+  };
+
   HisStorage.get($routeParams.requestId, function(current_request) {
     if (current_request) {
       $scope.headers = current_request.headers;
@@ -68,6 +76,8 @@ var RequestCtrl = function($scope, $location, $routeParams, HisStorage) {
       $scope.responseheaders = current_request.responseheaders;
       $scope.responsestatus = current_request.responsestatus;
     }
+
+    $scope.checkBody();
   });
 
   $scope.sendRequest = function() {

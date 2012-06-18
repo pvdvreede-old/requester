@@ -9,10 +9,10 @@
           <input class="span5" type="text" name="url" ng-model="url" /></li>         
           <label>Method</label>
           <label class="checkbox">
-            <input ng-model="method" ng-change="hideBody()" type="radio" name="method" value="GET" />GET
-            <input ng-model="method" ng-change="showBody()" type="radio" name="method" value="POST" />POST
-            <input ng-model="method" ng-change="showBody()" type="radio" name="method" value="PUT" />PUT
-            <input ng-model="method" ng-change="showBody()" type="radio" name="method" value="DELETE" />DELETE
+            <input ng-model="method" ng-change="checkBody()" type="radio" name="method" value="GET" />GET
+            <input ng-model="method" ng-change="checkBody()" type="radio" name="method" value="POST" />POST
+            <input ng-model="method" ng-change="checkBody()" type="radio" name="method" value="PUT" />PUT
+            <input ng-model="method" ng-change="checkBody()" type="radio" name="method" value="DELETE" />DELETE
           </label>
           <label>Headers</label>
           <div class="control-group" ng-repeat="header in headers">
