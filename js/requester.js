@@ -13,6 +13,11 @@ var MainCtrl = function($scope, $routeParams, HisStorage) {
     HisStorage.clear();
     $scope.history = HisStorage.items;
   };
+
+  $('#historytab a').click(function(e) {
+      e.preventDefault();
+      $(this).tab('show');
+  });
 };
 
 var RequestCtrl = function($scope, $location, $routeParams, HisStorage) {
