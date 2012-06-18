@@ -56,6 +56,7 @@ var RequestCtrl = function($scope, $location, $routeParams, HisStorage) {
       $scope.requestbody = current_request.body;
       $scope.responsebody = current_request.responsebody;
       $scope.responseheaders = current_request.responseheaders;
+      $scope.responsestatus = current_request.responsestatus;
     }
   });
 
@@ -65,6 +66,9 @@ var RequestCtrl = function($scope, $location, $routeParams, HisStorage) {
         if (xhr.readyState == 4) {
               var responsebody = xhr.responseText;
               var responseheaders = xhr.getAllResponseHeaders().split("\r\n");
+              // remove last header string in array as it is blank
+              responseheaders.pop();
+              var responsestatus = xhr.status + " - " + xhr.statusText;
 
               HisStorage.save({
                 time: new Date().toString(),
@@ -73,12 +77,15 @@ var RequestCtrl = function($scope, $location, $routeParams, HisStorage) {
                 headers: $scope.headers,
                 body: $scope.requestbody,
                 responseheaders: responseheaders,
-                responsebody: responsebody
+                responsebody: responsebody,
+                responsestatus: responsestatus
               }, function(request) {
+                // Kick angular to update the screen after the request has come back
                 $scope.$apply(function() {
                   $scope.history = HisStorage.items;
                   $scope.responseheaders = responseheaders;
                   $scope.responsebody = responsebody;
+                  $scope.responsestatus = responsestatus;
                   $('#loading').hide();   
                 });
               });
